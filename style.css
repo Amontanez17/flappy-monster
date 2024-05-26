@@ -1,10 +1,14 @@
-div {
-  width: 400px;
-  margin: 50px auto;
-  background-color: black;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-h1 {
-  text-align: center;
-  color: white;
+#canvas1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: blue;
+  max-width: 100%;
+  max-height: 100%;
 }
