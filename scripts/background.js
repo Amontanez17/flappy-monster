@@ -23,11 +23,20 @@ class Background {
     );
     this.game.ctx.drawImage(
       this.image,
-      this.x + this.scaledWidth - 2,
+      this.x + this.scaledWidth - 1,
       0,
       this.scaledWidth,
       this.scaledHeight
     );
+    if (this.game.canvas.width >= this.scaledWidth) {
+      this.game.ctx.drawImage(
+        this.image,
+        this.x + this.scaledWidth * 2 - 2,
+        0,
+        this.scaledWidth,
+        this.scaledHeight
+      );
+    }
   }
   resize() {
     this.scaledWidth = this.width * this.game.ratio;
