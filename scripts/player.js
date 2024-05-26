@@ -38,7 +38,7 @@ class Player {
   }
   flap() {
     if (!this.isTouchingTop()) {
-      this.speedY = -5;
+      this.speedY = -this.flapSpeed;
     }
   }
 }

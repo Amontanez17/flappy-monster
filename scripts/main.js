@@ -18,6 +18,15 @@ class Game {
     this.canvas.addEventListener("mousedown", (e) => {
       this.player.flap();
     });
+    // keyboard controls
+    window.addEventListener("keydown", (e) => {
+      console.log(e.key);
+      if (e.key === " " || e.key === "Enter") this.player.flap();
+    });
+    // touch controls for mobile gameplay
+    this.canvas.addEventListener("touchstart", (e) => {
+      this.player.flap();
+    });
   }
   resize(width, height) {
     this.canvas.width = width;
