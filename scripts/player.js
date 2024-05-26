@@ -15,7 +15,7 @@ class Player {
     // this.x++;
   }
   resize() {
-    this.width = 200;
-    this.height = 200;
+    this.width = this.spriteWidth * this.game.ratio;
+    this.height = this.spriteHeight * this.game.ratio;
   }
 }
