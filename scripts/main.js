@@ -9,7 +9,7 @@ class Game {
     this.background = new Background(this);
     this.player = new Player(this);
     this.obstacles = [];
-    this.numberOfObstacles = 10;
+    this.numberOfObstacles = 3;
 
     this.gravity;
     this.speed;
@@ -41,7 +41,7 @@ class Game {
     this.canvas.height = height;
     this.ctx.fillStyle = "blue";
     // This is where I make sure the font style is rendered with each resize
-    this.ctx.font = "25px Bungee";
+    this.ctx.font = "45px Bungee";
     this.ctx.textAlign = "right";
     this.width = this.canvas.width;
     this.height = this.canvas.height;
@@ -61,8 +61,7 @@ class Game {
   }
 
   render(deltaTime) {
-    console.log(deltaTime);
-    this.timer += deltaTime;
+    if (!this.gameOver) this.timer += deltaTime;
     this.background.update();
     this.background.draw();
     this.drawStatusText();
@@ -89,9 +88,14 @@ class Game {
   drawStatusText() {
     this.ctx.save();
     // draws the current score and the #s represent the X Y coodrinates of the text
-    this.ctx.fillText("Score: " + this.score, this.width - 20, 40);
+    this.ctx.fillText("Score: " + this.score, this.width - 35, 70);
     this.ctx.textAlign = "left";
-    this.ctx.fillText("Timer: " + this.formatTimer(), 20, 40);
+    this.ctx.fillText("Timer: " + this.formatTimer(), 35, 70);
+    if (this.gameOver) {
+      this.ctx.textAlign = "center";
+      this.ctx.font = "100px Bungee";
+      this.ctx.fillText("GAME OVER", this.width * 0.5, this.height * 0.5);
+    }
     this.ctx.restore();
   }
 }
@@ -110,7 +114,7 @@ window.addEventListener("load", function () {
     lastTime = timeStamp;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     game.render(deltaTime);
-    if (!game.gameOver) requestAnimationFrame(animate);
+    requestAnimationFrame(animate);
   }
   requestAnimationFrame(animate);
 });
