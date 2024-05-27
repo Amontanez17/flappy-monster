@@ -13,6 +13,9 @@ class Player {
     this.collisionY;
     this.collisionRadius;
     this.collided;
+    this.energy = 30;
+    this.maxEnergy = this.energy * 2;
+    this.minEnergy = 15;
   }
   draw() {
     this.game.ctx.fillRect(this.x, this.y, this.width, this.height);

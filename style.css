@@ -18,3 +18,18 @@
 .assets {
   display: none;
 }
+
+.hidden {
+  display: none;
+}
+
+#start-button {
+  display: flex;
+  /* align-content: center; */
+}
+
+#flappy-elf-start-screen {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}

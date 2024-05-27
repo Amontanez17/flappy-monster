@@ -9,7 +9,7 @@ class Game {
     this.background = new Background(this);
     this.player = new Player(this);
     this.obstacles = [];
-    this.numberOfObstacles = 3;
+    this.numberOfObstacles = 1;
 
     this.gravity;
     this.speed;
@@ -43,7 +43,7 @@ class Game {
     this.canvas.height = height;
     this.ctx.fillStyle = "blue";
     // This is where I make sure the font style is rendered with each resize
-    this.ctx.font = "45px Bungee";
+    this.ctx.font = "15px Bungee";
     this.ctx.textAlign = "right";
     this.ctx.lineWidth = 3;
     this.ctx.strokeStyle = "white";
@@ -100,20 +100,49 @@ class Game {
   drawStatusText() {
     this.ctx.save();
     // draws the current score and the #s represent the X Y coodrinates of the text
-    this.ctx.fillText("Score: " + this.score, this.width - 35, 70);
+    this.ctx.fillText("Score: " + this.score, this.width - 10, 30);
     this.ctx.textAlign = "left";
-    this.ctx.fillText("Timer: " + this.formatTimer(), 35, 70);
+    this.ctx.fillText("Timer: " + this.formatTimer(), 10, 30);
     if (this.gameOver) {
+      if (this.player.collided) {
+        console.log(this.player.collided);
+        this.message1 = "Getting rusty?";
+        this.message2 = "Collision time " + this.formatTimer() + " seconds!";
+      } else if (this.obstacles.length <= 0) {
+        this.message1 = "Killing it!";
+        this.message2 =
+          "Can you do it faster than " + this.formatTimer() + " seconds?";
+      }
       this.ctx.textAlign = "center";
-      this.ctx.font = "100px Bungee";
-      this.ctx.fillText("GAME OVER", this.width * 0.5, this.height * 0.5);
+      this.ctx.font = "30px Bungee";
+      this.ctx.fillText(
+        this.message1,
+        this.width * 0.5,
+        this.height * 0.5 - 40
+      );
+      this.ctx.font = "15px Bungee";
+      this.ctx.fillText(
+        this.message2,
+        this.width * 0.5,
+        this.height * 0.5 - 20
+      );
+      this.ctx.fillText(
+        "Press 'R' to try again!",
+        this.width * 0.5,
+        this.height * 0.5
+      );
+    }
+    for (let i = 0; i < this.player.energy; i++) {
+      this.ctx.fillRect(10 + i * 6, 40, 5, 15);
     }
     this.ctx.restore();
   }
 }
 
-window.addEventListener("load", function () {
-  const canvas = this.document.getElementById("canvas1");
+startButton = document.getElementById("start-button");
+startButton.addEventListener("click", function () {
+  const canvas = document.getElementById("canvas1");
+  canvas.classList.remove("hidden");
   const ctx = canvas.getContext("2d");
   canvas.width = 720;
   canvas.height = 720;
