@@ -9,15 +9,22 @@ class Game {
     this.background = new Background(this);
     this.player = new Player(this);
     this.obstacles = [];
-    this.numberOfObstacles = 1;
+    this.numberOfObstacles = 5;
 
     this.gravity;
     this.speed;
+    this.minSpeed;
+    this.maxSpeed;
     this.score;
     this.gameOver;
     this.timer;
     this.message1;
     this.message2;
+    this.eventTimer = 0;
+    this.eventInterval = 150;
+    this.eventUpdate = false;
+    this.touchStartX;
+    this.swipeDistance = 50;
 
     this.resize(window.innerWidth, window.innerHeight);
 
@@ -30,18 +37,29 @@ class Game {
     });
     // keyboard controls
     window.addEventListener("keydown", (e) => {
-      console.log(e.key);
-      if (e.key === " " || e.key === "Enter") this.player.flap();
+      // console.log(e.key);
+      if (e.key === " " || e.key === "Enter") {
+        this.player.flap();
+      }
+      if (e.key === "Shift" || e.key.toLowerCase() === "c") {
+        this.player.startCharge();
+      }
     });
     // touch controls for mobile gameplay
     this.canvas.addEventListener("touchstart", (e) => {
       this.player.flap();
+      this.touchStartX = e.changedTouches[0].pageX;
+    });
+    this.canvas.addEventListener("touchmove", (e) => {
+      if (e.changedTouches[0].pageX - this.touchStartX > this.swipeDistance) {
+        this.player.startCharge();
+      }
     });
   }
   resize(width, height) {
     this.canvas.width = width;
     this.canvas.height = height;
-    this.ctx.fillStyle = "blue";
+    // this.ctx.fillStyle = "blue";
     // This is where I make sure the font style is rendered with each resize
     this.ctx.font = "15px Bungee";
     this.ctx.textAlign = "right";
@@ -52,7 +70,9 @@ class Game {
     this.ratio = this.height / this.baseHeight;
 
     this.gravity = 0.15 * this.ratio;
-    this.speed = 3 * this.ratio;
+    this.speed = 2 * this.ratio;
+    this.minSpeed = this.speed;
+    this.maxSpeed = this.speed * 5;
     this.background.resize();
     this.player.resize();
     this.createObstacles();
@@ -66,6 +86,7 @@ class Game {
 
   render(deltaTime) {
     if (!this.gameOver) this.timer += deltaTime;
+    this.handlePeriodicEvents(deltaTime);
     this.background.update();
     this.background.draw();
     this.drawStatusText();
@@ -75,7 +96,7 @@ class Game {
       obstacle.update();
       obstacle.draw();
     });
-    console.log(this.obstacles);
+    // console.log(this.obstacles);
   }
   // Function that runs to spawn obstacles on the game screen - starts as an empty array
   createObstacles() {
@@ -94,6 +115,16 @@ class Game {
     const sumOfRadii = a.collisionRadius + b.collisionRadius;
     return distance <= sumOfRadii;
   }
+  handlePeriodicEvents(deltaTime) {
+    if (this.eventTimer < this.eventInterval) {
+      this.eventTimer += deltaTime;
+      this.eventUpdate = false;
+    } else {
+      this.eventTimer = this.eventTimer % this.eventInterval;
+      this.eventUpdate = true;
+      // console.log(this.eventTimer);
+    }
+  }
   formatTimer() {
     return (this.timer * 0.001).toFixed(1);
   }
@@ -105,7 +136,7 @@ class Game {
     this.ctx.fillText("Timer: " + this.formatTimer(), 10, 30);
     if (this.gameOver) {
       if (this.player.collided) {
-        console.log(this.player.collided);
+        // console.log(this.player.collided);
         this.message1 = "Getting rusty?";
         this.message2 = "Collision time " + this.formatTimer() + " seconds!";
       } else if (this.obstacles.length <= 0) {
@@ -132,30 +163,45 @@ class Game {
         this.height * 0.5
       );
     }
+    if (this.player.energy <= 20) this.ctx.fillStyle = "red";
+    else if (this.player.energy >= this.player.maxEnergy)
+      this.ctx.fillStyle = "orangered";
+    else this.ctx.fillStyle = "yellowgreen";
     for (let i = 0; i < this.player.energy; i++) {
-      this.ctx.fillRect(10 + i * 6, 40, 5, 15);
+      this.ctx.fillRect(
+        10,
+        this.height - 10 - this.player.barSize * i,
+        this.player.barSize * 5,
+        this.player.barSize
+      );
     }
     this.ctx.restore();
   }
 }
 
-startButton = document.getElementById("start-button");
-startButton.addEventListener("click", function () {
-  const canvas = document.getElementById("canvas1");
-  canvas.classList.remove("hidden");
-  const ctx = canvas.getContext("2d");
-  canvas.width = 720;
-  canvas.height = 720;
+let welcomeScreen = document.getElementById("flappy-elf-start-screen");
+let startButton = document.getElementById("start-button");
+startButton.addEventListener(
+  "click",
+  function () {
+    welcomeScreen.classList.add("hidden");
+    const canvas = document.getElementById("canvas1");
+    canvas.classList.remove("hidden");
+    const ctx = canvas.getContext("2d");
+    canvas.width = 720;
+    canvas.height = 720;
 
-  const game = new Game(canvas, ctx);
+    const game = new Game(canvas, ctx);
 
-  let lastTime = 0;
-  function animate(timeStamp) {
-    const deltaTime = timeStamp - lastTime;
-    lastTime = timeStamp;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    game.render(deltaTime);
+    let lastTime = 0;
+    function animate(timeStamp) {
+      const deltaTime = timeStamp - lastTime;
+      lastTime = timeStamp;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      game.render(deltaTime);
+      requestAnimationFrame(animate);
+    }
     requestAnimationFrame(animate);
-  }
-  requestAnimationFrame(animate);
-});
+  },
+  { once: true }
+);
