@@ -16,6 +16,8 @@ class Game {
     this.score;
     this.gameOver;
     this.timer;
+    this.message1;
+    this.message2;
 
     this.resize(window.innerWidth, window.innerHeight);
 
@@ -43,6 +45,8 @@ class Game {
     // This is where I make sure the font style is rendered with each resize
     this.ctx.font = "45px Bungee";
     this.ctx.textAlign = "right";
+    this.ctx.lineWidth = 3;
+    this.ctx.strokeStyle = "white";
     this.width = this.canvas.width;
     this.height = this.canvas.height;
     this.ratio = this.height / this.baseHeight;
@@ -81,6 +85,14 @@ class Game {
     for (let i = 0; i < this.numberOfObstacles; i++) {
       this.obstacles.push(new Obstacle(this, firstX + i * obstacleSpacing));
     }
+  }
+  checkCollision(a, b) {
+    const dx = a.collisionX - b.collisionX;
+    const dy = a.collisionY - b.collisionY;
+    // Check collision between two points in space here it's hypot bcause the distance creates a triangle between the two points
+    const distance = Math.hypot(dx, dy);
+    const sumOfRadii = a.collisionRadius + b.collisionRadius;
+    return distance <= sumOfRadii;
   }
   formatTimer() {
     return (this.timer * 0.001).toFixed(1);
