@@ -23,7 +23,9 @@ class Obstacle {
       this.game.obstacles = this.game.obstacles.filter(
         (obstacle) => !obstacle.markedForDeletion
       );
-      //   console.log(this.game.obstacles.length);
+      console.log(this.game.obstacles.length);
+      this.game.score++;
+      if (this.game.obstacles.length <= 0) this.game.gameOver = true;
     }
   }
   draw() {
@@ -34,6 +36,6 @@ class Obstacle {
     this.scaledHeight = this.spriteHeight * this.game.ratio;
   }
   isOffScreen() {
-    return this.x < 0;
+    return this.x < -this.scaledWidth;
   }
 }
