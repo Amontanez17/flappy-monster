@@ -20,8 +20,8 @@ class Obstacle {
     this.y += this.speedY;
     this.collisionX = this.x + this.scaledWidth * 0.5;
     this.collisionY = this.y + this.scaledHeight * 0.5;
-    if (this.game.gameOver) {
-      if (!this.y <= 0 || this.y >= this.game.height - this.scaledHeight) {
+    if (!this.game.gameOver) {
+      if (this.y <= 0 || this.y >= this.game.height - this.scaledHeight) {
         this.speedY *= -1;
       }
     } else {

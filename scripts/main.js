@@ -4,12 +4,13 @@ class Game {
     this.ctx = context;
     this.width = this.canvas.width;
     this.height = this.canvas.height;
+    // this.baseHeight = 720;
     this.baseHeight = 720;
     this.ratio = this.height / this.baseHeight;
     this.background = new Background(this);
     this.player = new Player(this);
     this.obstacles = [];
-    this.numberOfObstacles = 5;
+    this.numberOfObstacles = 2;
 
     this.gravity;
     this.speed;
