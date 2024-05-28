@@ -25,7 +25,7 @@ class Background {
     );
     this.game.ctx.drawImage(
       this.image,
-      this.x + this.scaledWidth - 2.5,
+      this.x + this.scaledWidth - 2.8,
       0,
       this.scaledWidth,
       this.scaledHeight
@@ -33,7 +33,7 @@ class Background {
     if (this.game.canvas.width >= this.scaledWidth) {
       this.game.ctx.drawImage(
         this.image,
-        this.x + this.scaledWidth * 2 - 2,
+        this.x + this.scaledWidth * 2 - 3,
         0,
         this.scaledWidth,
         this.scaledHeight

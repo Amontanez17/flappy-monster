@@ -10,9 +10,12 @@ class Game {
     this.ratio = this.height / this.baseHeight;
     this.background = new Background(this);
     this.player = new Player(this);
+    this.sound = new AudioControl();
     this.obstacles = [];
-    this.numberOfObstacles = 15;
+    this.numberOfObstacles = 5;
+    this.animationId = null;
 
+    this.bottomMargin;
     this.gravity;
     this.speed;
     this.minSpeed;
@@ -22,6 +25,8 @@ class Game {
     this.timer;
     this.message1;
     this.message2;
+    this.smallFont;
+    this.largeFont;
     this.eventTimer = 0;
     this.eventInterval = 150;
     this.eventUpdate = false;
@@ -69,14 +74,17 @@ class Game {
     this.canvas.height = height;
     this.ctx.fillStyle = "white";
     // This is where I make sure the font style is rendered with each resize
-    this.ctx.font = "15px Bungee";
     this.ctx.textAlign = "right";
-    this.ctx.lineWidth = 3;
+    this.ctx.lineWidth = 1;
     this.ctx.strokeStyle = "white";
     this.width = this.canvas.width;
     this.height = this.canvas.height;
     this.ratio = this.height / this.baseHeight;
 
+    this.bottomMargin = Math.floor(50 * this.ratio);
+    this.smallFont = Math.ceil(20 * this.ratio);
+    this.largeFont = Math.ceil(40 * this.ratio);
+    this.ctx.font = this.smallFont + "px Bungee";
     this.gravity = 0.15 * this.ratio;
     this.speed = 2 * this.ratio;
     this.minSpeed = this.speed;
@@ -93,7 +101,8 @@ class Game {
   }
 
   render(deltaTime) {
-    if (!this.gameOver) this.timer += deltaTime;
+    // if (this.gameOver) return;
+    this.timer += deltaTime;
     this.ctx.clearRect(0, 0, this.width, this.height);
     this.handlePeriodicEvents(deltaTime);
     this.background.update();
@@ -113,7 +122,11 @@ class Game {
     const firstX = this.baseHeight * this.ratio;
     const obstacleSpacing = 500 * this.ratio;
     for (let i = 0; i < this.numberOfObstacles; i++) {
-      this.obstacles.push(new Obstacle(this, firstX + i * obstacleSpacing));
+      this.obstacles.push(
+        Math.random() > 0.2
+          ? new Wraith(this, firstX + i * obstacleSpacing)
+          : new BrownWraith(this, firstX + i * obstacleSpacing)
+      );
     }
   }
   checkCollision(a, b) {
@@ -137,42 +150,61 @@ class Game {
   formatTimer() {
     return (this.timer * 0.001).toFixed(1);
   }
-  drawStatusText() {
-    this.ctx.save();
-    // draws the current score and the #s represent the X Y coodrinates of the text
-    this.ctx.fillText("Score: " + this.score, this.width - 10, 30);
-    this.ctx.textAlign = "left";
-    this.ctx.fillText("Timer: " + this.formatTimer(), 10, 30);
-    if (this.gameOver) {
-      if (this.player.collided) {
-        // console.log(this.player.collided);
-        this.message1 = "Getting rusty?";
-        this.message2 = "Collision time " + this.formatTimer() + " seconds!";
-      } else if (this.obstacles.length <= 0) {
+  triggerGameOver() {
+    if (!this.gameOver) {
+      this.gameOver = true;
+      if (this.obstacles.length <= 0) {
+        this.sound.play(this.sound.win);
         this.message1 = "Killing it!";
         this.message2 =
           "Can you do it faster than " + this.formatTimer() + " seconds?";
+        this.speedX = 0;
+      } else {
+        this.sound.play(this.sound.lose);
+        this.message1 = "Getting rusty?";
+        this.speedX = 0;
+        this.message2 = "Collision time " + this.formatTimer() + " seconds!";
       }
+    }
+  }
+  drawStatusText() {
+    this.ctx.save();
+    // draws the current score and the #s represent the X Y coodrinates of the text
+    this.ctx.fillText(
+      "Score: " + this.score,
+      this.width - this.smallFont,
+      this.largeFont
+    );
+    this.ctx.textAlign = "left";
+    this.ctx.fillText(
+      "Timer: " + this.formatTimer(),
+      this.smallFont,
+      this.largeFont
+    );
+    if (this.gameOver) {
       this.ctx.textAlign = "center";
-      this.ctx.font = "30px Bungee";
+      this.ctx.font = this.largeFont + "px Bungee";
       this.ctx.fillText(
         this.message1,
         this.width * 0.5,
-        this.height * 0.5 - 40
+        this.height * 0.5 - this.largeFont,
+        this.width
       );
-      this.ctx.font = "15px Bungee";
+      this.ctx.font = this.smallFont + "px Bungee";
       this.ctx.fillText(
         this.message2,
         this.width * 0.5,
-        this.height * 0.5 - 20
+        this.height * 0.5 - this.smallFont,
+        this.width
       );
       this.ctx.fillText(
         "Press 'R' to try again!",
         this.width * 0.5,
-        this.height * 0.5
+        this.height * 0.5 - this.smallFont,
+        this.width
       );
     }
-    if (this.player.energy <= 20) this.ctx.fillStyle = "red";
+    if (this.player.energy <= this.player.minEnergy) this.ctx.fillStyle = "red";
     else if (this.player.energy >= this.player.maxEnergy)
       this.ctx.fillStyle = "orangered";
     else this.ctx.fillStyle = "yellowgreen";
@@ -206,7 +238,7 @@ startButton.addEventListener(
     function animate(timeStamp) {
       const deltaTime = timeStamp - lastTime;
       lastTime = timeStamp;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // ctx.clearRect(0, 0, canvas.width, canvas.height);
       game.render(deltaTime);
       requestAnimationFrame(animate);
     }

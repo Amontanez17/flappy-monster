@@ -1,7 +1,7 @@
 class Player {
   constructor(game) {
     this.game = game;
-    this.x = 20;
+    this.x = 30;
     this.y;
     this.spriteWidth = 210; //Sprite png given for the tutorial is 200px by 200px
     this.spriteHeight = 210;
@@ -42,7 +42,7 @@ class Player {
       0,
       Math.PI * 2
     );
-    this.game.ctx.stroke();
+    // this.game.ctx.stroke();
   }
   update() {
     this.handleEnergy();
@@ -56,7 +56,7 @@ class Player {
     }
     // bottom boundary
     if (this.isTouchingBottom()) {
-      this.y = this.game.height - this.height;
+      this.y = this.game.height - this.height - this.game.bottomMargin;
       this.wingsIdle();
     }
   }
@@ -74,16 +74,21 @@ class Player {
     this.charging = false;
   }
   startCharge() {
-    this.charging = true;
-    this.game.speed = this.game.maxSpeed;
-    this.wingsCharge();
+    if (this.energy >= this.minEnergy && !this.charging) {
+      this.charging = true;
+      this.game.speed = this.game.maxSpeed;
+      this.wingsCharge();
+      this.game.sound.play(this.game.sound.charge);
+    } else {
+      this.stopCharge();
+    }
   }
   stopCharge() {
     this.charging = false;
     this.game.speed = this.game.minSpeed;
   }
   wingsIdle() {
-    this.frameY = 1;
+    if (!this.charging) this.frameY = 1;
   }
   wingsDown() {
     if (!this.charging) this.frameY = 2;
@@ -98,7 +103,7 @@ class Player {
     return this.y <= 0;
   }
   isTouchingBottom() {
-    return this.y >= this.game.height - this.height;
+    return this.y >= this.game.height - this.height - this.game.bottomMargin;
   }
   handleEnergy() {
     if (this.game.eventUpdate) {
@@ -118,6 +123,9 @@ class Player {
     this.stopCharge();
     if (!this.isTouchingTop()) {
       this.speedY = -this.flapSpeed;
+      this.game.sound.play(
+        this.game.sound.flapSounds[Math.floor(Math.random() * 5)]
+      );
       this.wingsDown();
     }
   }

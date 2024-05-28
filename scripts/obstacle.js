@@ -15,7 +15,7 @@ class Obstacle {
       Math.random() < 0.5 ? -1 * this.game.ratio : 1 * this.game.ratio;
     this.markedForDeletion = false;
     this.image = document.getElementById("obstacle_wraith");
-    this.frameX = Math.floor(Math.random() * 4);
+    this.frameX = 0;
   }
   update() {
     this.x -= this.game.speed;
@@ -36,12 +36,13 @@ class Obstacle {
       );
       //   console.log(this.game.obstacles.length);
       this.game.score++;
-      if (this.game.obstacles.length <= 0) this.game.gameOver = true;
+      if (this.game.obstacles.length <= 0) this.game.triggerGameOver();
     }
     if (this.game.checkCollision(this, this.game.player)) {
-      this.game.gameOver = true;
+      // this.game.gameOver = true;
       this.game.player.collided = true;
       this.game.player.stopCharge();
+      this.game.triggerGameOver();
     }
   }
   draw() {
@@ -65,14 +66,34 @@ class Obstacle {
       0,
       Math.PI * 2
     );
-    this.game.ctx.stroke();
+    // this.game.ctx.stroke();
   }
   resize() {
     this.scaledWidth = this.spriteWidth * this.game.ratio;
     this.scaledHeight = this.spriteHeight * this.game.ratio;
-    this.collisionRadius = this.scaledWidth * 0.5;
+    this.collisionRadius = this.scaledWidth * 0.4;
   }
   isOffScreen() {
     return this.x < -this.scaledWidth || this.y > this.game.height;
+  }
+}
+
+class Wraith extends Obstacle {
+  constructor(game, x) {
+    super(game, x);
+    this.frameX = 0;
+    this.maxFrames = 4;
+    this.image = document.getElementById("obstacle_wraith");
+    setInterval(() => {
+      this.frameX++;
+      this.frameX %= 4;
+    }, 250);
+  }
+}
+
+class BrownWraith extends Wraith {
+  constructor(game, x) {
+    super(game, x);
+    this.image = document.getElementById("brown_wraith");
   }
 }
