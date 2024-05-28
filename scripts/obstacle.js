@@ -97,3 +97,10 @@ class BrownWraith extends Wraith {
     this.image = document.getElementById("brown_wraith");
   }
 }
+
+class PurpleWraith extends Wraith {
+  constructor(game, x) {
+    super(game, x);
+    this.image = document.getElementById("purple_wraith");
+  }
+}

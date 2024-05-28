@@ -12,7 +12,7 @@ class Game {
     this.player = new Player(this);
     this.sound = new AudioControl();
     this.obstacles = [];
-    this.numberOfObstacles = 5;
+    this.numberOfObstacles = 7;
     this.animationId = null;
 
     this.bottomMargin;
@@ -117,18 +117,42 @@ class Game {
     // console.log(this.obstacles);
   }
   // Function that runs to spawn obstacles on the game screen - starts as an empty array
+  // createObstacles() {
+  //   this.obstacles = [];
+  //   const firstX = this.baseHeight * this.ratio;
+  //   const obstacleSpacing = 500 * this.ratio;
+  //   for (let i = 0; i < this.numberOfObstacles; i++) {
+  //     this.obstacles.push(
+  //       Math.random() > 0.2
+  //         ? new Wraith(this, firstX + i * obstacleSpacing)
+  //         : new BrownWraith(this, firstX + i * obstacleSpacing) :
+  //       new PurpleWraith(this, firstX + i * obstacleSpacing)
+  //     );
+  //   }
+  // }
   createObstacles() {
     this.obstacles = [];
     const firstX = this.baseHeight * this.ratio;
     const obstacleSpacing = 500 * this.ratio;
     for (let i = 0; i < this.numberOfObstacles; i++) {
-      this.obstacles.push(
-        Math.random() > 0.2
-          ? new Wraith(this, firstX + i * obstacleSpacing)
-          : new BrownWraith(this, firstX + i * obstacleSpacing)
-      );
+      if (Math.random() > 0.3) {
+        this.obstacles.push(new Wraith(this, firstX + i * obstacleSpacing));
+      } else {
+        if (Math.random() > 0.4) {
+          this.obstacles.push(
+            new BrownWraith(this, firstX + i * obstacleSpacing)
+          );
+        } else {
+          if (Math.random() > 0.5) {
+            this.obstacles.push(
+              new PurpleWraith(this, firstX + i * obstacleSpacing)
+            );
+          }
+        }
+      }
     }
   }
+
   checkCollision(a, b) {
     const dx = a.collisionX - b.collisionX;
     const dy = a.collisionY - b.collisionY;
