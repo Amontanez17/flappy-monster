@@ -28,10 +28,18 @@
   /* align-content: center; */
 }
 
-#flappy-elf-start-screen {
+#start-screen {
+  background-image: url("/gui/flappy\ monster\ logo.png");
+  background-repeat: no-repeat;
+  background-size: cover;
   display: flex;
   height: 100vh;
-  width: 100%;
+  width: 100vw;
   align-items: center;
   justify-content: center;
+}
+
+#logo {
+  display: flex;
+  max-width: 100vw;
 }

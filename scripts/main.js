@@ -12,7 +12,7 @@ class Game {
     this.player = new Player(this);
     this.sound = new AudioControl();
     this.obstacles = [];
-    this.numberOfObstacles = 7;
+    this.numberOfObstacles = 3;
     this.animationId = null;
 
     this.bottomMargin;
@@ -73,6 +73,7 @@ class Game {
     this.canvas.width = width;
     this.canvas.height = height;
     this.ctx.fillStyle = "white";
+    this.ctx.strokeStyle = "black";
     // This is where I make sure the font style is rendered with each resize
     this.ctx.textAlign = "right";
     this.ctx.lineWidth = 1;
@@ -179,7 +180,7 @@ class Game {
       this.gameOver = true;
       if (this.obstacles.length <= 0) {
         this.sound.play(this.sound.win);
-        this.message1 = "Killing it!";
+        this.message1 = "You crushed it!";
         this.message2 =
           "Can you do it faster than " + this.formatTimer() + " seconds?";
         this.speedX = 0;
@@ -208,6 +209,7 @@ class Game {
     if (this.gameOver) {
       this.ctx.textAlign = "center";
       this.ctx.font = this.largeFont + "px Bungee";
+      this.ctx.strokeStyle = "black";
       this.ctx.fillText(
         this.message1,
         this.width * 0.5,
@@ -215,18 +217,19 @@ class Game {
         this.width
       );
       this.ctx.font = this.smallFont + "px Bungee";
+      this.ctx.strokeStyle = "black";
       this.ctx.fillText(
         this.message2,
         this.width * 0.5,
         this.height * 0.5 - this.smallFont,
         this.width
       );
-      this.ctx.fillText(
-        "Press 'R' to try again!",
-        this.width * 0.5,
-        this.height * 0.5 - this.smallFont,
-        this.width
-      );
+      // this.ctx.fillText(
+      //   "Press 'R' to try again!",
+      //   this.width * 0.5,
+      //   this.height * 0.5 - this.smallFont,
+      //   this.width
+      // );
     }
     if (this.player.energy <= this.player.minEnergy) this.ctx.fillStyle = "red";
     else if (this.player.energy >= this.player.maxEnergy)
@@ -244,8 +247,8 @@ class Game {
   }
 }
 
-let welcomeScreen = document.getElementById("flappy-elf-start-screen");
-let startButton = document.getElementById("start-button");
+let welcomeScreen = document.getElementById("start-screen");
+let startButton = document.getElementById("start-button-img");
 startButton.addEventListener(
   "click",
   function () {
