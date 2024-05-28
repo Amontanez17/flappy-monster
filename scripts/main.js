@@ -2,15 +2,16 @@ class Game {
   constructor(canvas, context) {
     this.canvas = canvas;
     this.ctx = context;
+    this.ctx.imageSmoothingEnabled = false;
     this.width = this.canvas.width;
     this.height = this.canvas.height;
-    // this.baseHeight = 720;
+    // this.baseHeight = 1441;
     this.baseHeight = 720;
     this.ratio = this.height / this.baseHeight;
     this.background = new Background(this);
     this.player = new Player(this);
     this.obstacles = [];
-    this.numberOfObstacles = 2;
+    this.numberOfObstacles = 15;
 
     this.gravity;
     this.speed;
@@ -36,6 +37,9 @@ class Game {
     this.canvas.addEventListener("mousedown", (e) => {
       this.player.flap();
     });
+    this.canvas.addEventListener("mouseup", (e) => {
+      this.player.wingsUp();
+    });
     // keyboard controls
     window.addEventListener("keydown", (e) => {
       // console.log(e.key);
@@ -45,6 +49,9 @@ class Game {
       if (e.key === "Shift" || e.key.toLowerCase() === "c") {
         this.player.startCharge();
       }
+      window.addEventListener("keyup", (e) => {
+        this.player.wingsUp();
+      });
     });
     // touch controls for mobile gameplay
     this.canvas.addEventListener("touchstart", (e) => {
@@ -60,7 +67,7 @@ class Game {
   resize(width, height) {
     this.canvas.width = width;
     this.canvas.height = height;
-    // this.ctx.fillStyle = "blue";
+    this.ctx.fillStyle = "white";
     // This is where I make sure the font style is rendered with each resize
     this.ctx.font = "15px Bungee";
     this.ctx.textAlign = "right";
@@ -87,6 +94,7 @@ class Game {
 
   render(deltaTime) {
     if (!this.gameOver) this.timer += deltaTime;
+    this.ctx.clearRect(0, 0, this.width, this.height);
     this.handlePeriodicEvents(deltaTime);
     this.background.update();
     this.background.draw();
@@ -103,7 +111,7 @@ class Game {
   createObstacles() {
     this.obstacles = [];
     const firstX = this.baseHeight * this.ratio;
-    const obstacleSpacing = 600 * this.ratio;
+    const obstacleSpacing = 500 * this.ratio;
     for (let i = 0; i < this.numberOfObstacles; i++) {
       this.obstacles.push(new Obstacle(this, firstX + i * obstacleSpacing));
     }
@@ -206,3 +214,5 @@ startButton.addEventListener(
   },
   { once: true }
 );
+
+// inside of the animate function increment a count, set a max count 18, the player image source should be modified based on the counter. add a modulo % 18 so it restarts at zero

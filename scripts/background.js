@@ -3,8 +3,8 @@ class Background {
     this.game = game;
     this.image = document.getElementById("background");
     // Make sure I change these values to match my bg source image once I customize it
-    this.width = 2400;
-    // this.width = 8000;
+    this.width = 2401;
+    // this.width = 4801;
     this.height = this.game.baseHeight;
     this.scaledWidth;
     this.scaledHeight;
@@ -12,6 +12,7 @@ class Background {
   }
   update() {
     this.x -= this.game.speed;
+    // this.x -= 1;
     if (this.x <= -this.scaledWidth) this.x = 0;
   }
   draw() {
@@ -24,7 +25,7 @@ class Background {
     );
     this.game.ctx.drawImage(
       this.image,
-      this.x + this.scaledWidth - 1,
+      this.x + this.scaledWidth - 2.5,
       0,
       this.scaledWidth,
       this.scaledHeight
