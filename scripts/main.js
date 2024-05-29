@@ -14,6 +14,8 @@ class Game {
     this.obstacles = [];
     this.numberOfObstacles = 3;
     this.animationId = null;
+    this.restartDialog = document.getElementById("restart-dialog");
+    this.restartButton = document.getElementById("restart-button");
 
     this.bottomMargin;
     this.gravity;
@@ -72,8 +74,8 @@ class Game {
   resize(width, height) {
     this.canvas.width = width;
     this.canvas.height = height;
-    this.ctx.fillStyle = "white";
-    this.ctx.strokeStyle = "black";
+    this.ctx.fillStyle = "#B8D941";
+    // this.ctx.strokeStyle = "black";
     // This is where I make sure the font style is rendered with each resize
     this.ctx.textAlign = "right";
     this.ctx.lineWidth = 1;
@@ -176,30 +178,45 @@ class Game {
     return (this.timer * 0.001).toFixed(1);
   }
   triggerGameOver() {
+    let restartDialog = document.getElementById("restart-dialog");
+    let restartButton = document.getElementById("restart-button");
+
+    restartButton.addEventListener("click", restartGame);
+
+    function restartGame(e) {
+      location.reload();
+    }
+
     if (!this.gameOver) {
       this.gameOver = true;
+      restartDialog.showModal();
+
       if (this.obstacles.length <= 0) {
         this.sound.play(this.sound.win);
         this.message1 = "You crushed it!";
         this.message2 =
           "Can you do it faster than " + this.formatTimer() + " seconds?";
         this.speedX = 0;
+        restartDialog.showModal();
       } else {
         this.sound.play(this.sound.lose);
         this.message1 = "Getting rusty?";
         this.speedX = 0;
         this.message2 = "Collision time " + this.formatTimer() + " seconds!";
+        restartDialog.showModal();
       }
     }
   }
   drawStatusText() {
     this.ctx.save();
     // draws the current score and the #s represent the X Y coodrinates of the text
+    this.ctx.fillStyle = "##B8D941";
     this.ctx.fillText(
       "Score: " + this.score,
       this.width - this.smallFont,
       this.largeFont
     );
+    this.ctx.fillStyle = "##B8D941";
     this.ctx.textAlign = "left";
     this.ctx.fillText(
       "Timer: " + this.formatTimer(),
@@ -210,6 +227,7 @@ class Game {
       this.ctx.textAlign = "center";
       this.ctx.font = this.largeFont + "px Bungee";
       this.ctx.strokeStyle = "black";
+      this.ctx.fillStyle = "white";
       this.ctx.fillText(
         this.message1,
         this.width * 0.5,
@@ -218,6 +236,7 @@ class Game {
       );
       this.ctx.font = this.smallFont + "px Bungee";
       this.ctx.strokeStyle = "black";
+      this.ctx.fillStyle = "white";
       this.ctx.fillText(
         this.message2,
         this.width * 0.5,
@@ -247,8 +266,31 @@ class Game {
   }
 }
 
+let helpScreen = document.getElementById("help-screen");
 let welcomeScreen = document.getElementById("start-screen");
 let startButton = document.getElementById("start-button-img");
+let helpButton = document.getElementById("help-button");
+
+document.getElementById("help-button").addEventListener("click", openHelp);
+document.getElementById("exit-help").addEventListener("click", closeHelp);
+
+// Function to open the help screen and hide the start screen
+function openHelp() {
+  document.getElementById("help-screen").style.display = "flex";
+}
+
+function closeHelp() {
+  document.getElementById("help-screen").style.display = "none";
+}
+
+document.addEventListener(
+  "mousemove",
+  () => {
+    let audioControl = new AudioControl();
+    audioControl.play(audioControl.startSong);
+  },
+  { once: true }
+);
 startButton.addEventListener(
   "click",
   function () {

@@ -11,16 +11,48 @@
       href="https://fonts.googleapis.com/css2?family=Bungee&display=swap"
       rel="stylesheet"
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bungee&family=Comfortaa:wght@300..700&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+      rel="stylesheet"
+    />
+
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <!-- Welcome screen -->
     <div id="start-screen">
       <!-- <img id="start-button-img" src="gui/flappy monster logo.png" /> -->
-      <img id="start-button-img" src="gui/start button @2x.png" />
-
-      <!-- <button id="start-button">Start Flappy Bat</button> -->
+      <!-- <img id="start-button-img" src="gui/start button @2x.png" /> -->
+      <img id="start-button-img" src="gui/green start button@2x.png" />
+      <button id="help-button">HELP</button>
     </div>
+
+    <!--Tutorial Screen-->
+    <div id="help-screen">
+      <h1 class="header1">How to play</h1>
+      <p class="instructions">Welcome to the world of Flappy Monster!</p>
+      <p class="instructions">
+        The goal of the game is to stay alive muahahaha...You can do this by
+        avoiding all contact with the evil wraiths.
+      </p>
+
+      <p class="instructions">
+        Press Space or left-click to flap and fly. Press Shift for a speed
+        power-up
+      </p>
+      <button id="exit-help">exit</button>
+    </div>
+    <!--Modal for Restart-->
+
+    <dialog id="restart-dialog">
+      <form method="dialog">
+        <!-- <p>Better luck next time!</p> -->
+        <p>Would you like to try again? <strong id="number"></strong></p>
+        <button id="restart-button">Restart</button>
+      </form>
+    </dialog>
 
     <!-- Game screen -->
     <canvas id="canvas1" class="hidden"></canvas>
@@ -54,8 +86,10 @@
       <audio id="flap5" src="./sounds/flap5.mp3"></audio>
       <audio id="win" src="./sounds/Winning.mp3"></audio>
       <audio id="lose" src="./sounds/Level Lose.wav"></audio>
+      <audio id="start-song" src="./sounds/Moonside Lake.wav"></audio>
     </div>
 
+    <script src="scripts/tutorial.js"></script>
     <script src="scripts/audio.js"></script>
     <script src="scripts/background.js"></script>
     <script src="scripts/player.js"></script>

@@ -15,6 +15,7 @@ class AudioControl {
     ];
     this.win = document.getElementById("win");
     this.lose = document.getElementById("lose");
+    this.startSong = document.getElementById("start-song");
   }
   play(sound) {
     sound.currentTime = 0;
