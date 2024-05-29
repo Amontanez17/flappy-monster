@@ -25,8 +25,10 @@
     <div id="start-screen">
       <!-- <img id="start-button-img" src="gui/flappy monster logo.png" /> -->
       <!-- <img id="start-button-img" src="gui/start button @2x.png" /> -->
-      <img id="start-button-img" src="gui/green start button@2x.png" />
-      <button id="help-button">HELP</button>
+      <div class="start-buttons">
+        <img id="start-button-img" src="gui/green start button@2x.png" />
+        <button id="help-button">HELP</button>
+      </div>
     </div>
 
     <!--Tutorial Screen-->
@@ -49,8 +51,21 @@
     <dialog id="restart-dialog">
       <form method="dialog">
         <!-- <p>Better luck next time!</p> -->
-        <p>Would you like to try again? <strong id="number"></strong></p>
+        <p class="restart-text">Oof you were close!</p>
+        <p class="instructions restart-text">
+          Would you like to try again? <strong id="number"></strong>
+        </p>
         <button id="restart-button">Restart</button>
+      </form>
+    </dialog>
+
+    <dialog id="restart-dialog-win">
+      <form method="dialog">
+        <p class="restart-text">Let's beat that score</p>
+        <p class="instructions restart-text">
+          How about another try?<strong id="number"></strong>
+        </p>
+        <button id="restart-button2">Restart</button>
       </form>
     </dialog>
 

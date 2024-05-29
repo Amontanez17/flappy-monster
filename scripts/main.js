@@ -16,6 +16,7 @@ class Game {
     this.animationId = null;
     this.restartDialog = document.getElementById("restart-dialog");
     this.restartButton = document.getElementById("restart-button");
+    this.restartWinDialog = document.getElementById("restart-dialog-win");
 
     this.bottomMargin;
     this.gravity;
@@ -180,8 +181,11 @@ class Game {
   triggerGameOver() {
     let restartDialog = document.getElementById("restart-dialog");
     let restartButton = document.getElementById("restart-button");
+    let restartButton2 = document.getElementById("restart-button2");
+    let restartWinDialog = document.getElementById("restart-dialog-win");
 
     restartButton.addEventListener("click", restartGame);
+    restartButton2.addEventListener("click", restartGame);
 
     function restartGame(e) {
       location.reload();
@@ -189,7 +193,11 @@ class Game {
 
     if (!this.gameOver) {
       this.gameOver = true;
-      restartDialog.showModal();
+      // setTimeout(function () {
+      //   restartWinDialog.showModal();
+      // }, 3000);
+
+      // restartDialog.showModal();
 
       if (this.obstacles.length <= 0) {
         this.sound.play(this.sound.win);
@@ -197,13 +205,21 @@ class Game {
         this.message2 =
           "Can you do it faster than " + this.formatTimer() + " seconds?";
         this.speedX = 0;
-        restartDialog.showModal();
+        setTimeout(function () {
+          restartWinDialog.showModal();
+        }, 3000);
+
+        // restartDialog.showModal();
       } else {
         this.sound.play(this.sound.lose);
         this.message1 = "Getting rusty?";
         this.speedX = 0;
         this.message2 = "Collision time " + this.formatTimer() + " seconds!";
-        restartDialog.showModal();
+
+        setTimeout(function () {
+          restartDialog.showModal();
+        }, 3000);
+        // restartDialog.showModal();
       }
     }
   }
