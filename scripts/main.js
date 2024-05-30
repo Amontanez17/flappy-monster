@@ -208,7 +208,7 @@ class Game {
         this.speedX = 0;
         setTimeout(function () {
           restartWinDialog.showModal();
-        }, 2000);
+        }, 2500);
 
         // restartDialog.showModal();
       } else {
@@ -219,7 +219,7 @@ class Game {
 
         setTimeout(function () {
           restartDialog.showModal();
-        }, 2000);
+        }, 2500);
         // restartDialog.showModal();
       }
     }
