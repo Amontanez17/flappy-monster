@@ -13,7 +13,7 @@ class Game {
     this.player = new Player(this);
     this.sound = new AudioControl();
     this.obstacles = [];
-    this.numberOfObstacles = 3;
+    this.numberOfObstacles = 15;
     this.animationId = null;
     this.restartDialog = document.getElementById("restart-dialog");
     this.restartButton = document.getElementById("restart-button");
@@ -91,7 +91,7 @@ class Game {
     this.largeFont = Math.ceil(40 * this.ratio);
     this.ctx.font = this.smallFont + "px Bungee";
     this.gravity = 0.15 * this.ratio;
-    this.speed = 2 * this.ratio;
+    this.speed = 4 * this.ratio;
     this.minSpeed = this.speed;
     this.maxSpeed = this.speed * 5;
     this.background.resize();
