@@ -1,3 +1,4 @@
+let audioControl;
 class Game {
   constructor(canvas, context) {
     this.canvas = canvas;
@@ -207,7 +208,7 @@ class Game {
         this.speedX = 0;
         setTimeout(function () {
           restartWinDialog.showModal();
-        }, 3000);
+        }, 1000);
 
         // restartDialog.showModal();
       } else {
@@ -218,7 +219,7 @@ class Game {
 
         setTimeout(function () {
           restartDialog.showModal();
-        }, 3000);
+        }, 1000);
         // restartDialog.showModal();
       }
     }
@@ -295,8 +296,7 @@ document.getElementById("exit-help").addEventListener("click", closeHelp);
 //Mute Sound
 function handleMute(e) {
   console.log(muteButton);
-  let audioMute = AudioControl;
-  audioMute.stop(AudioControl);
+  audioControl.toggle();
 }
 
 // Function to open the help screen and hide the start screen
@@ -311,7 +311,7 @@ function closeHelp() {
 document.addEventListener(
   "mousemove",
   () => {
-    let audioControl = new AudioControl();
+    audioControl = new AudioControl();
     audioControl.play(audioControl.startSong);
   },
   { once: true }

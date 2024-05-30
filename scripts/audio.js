@@ -21,4 +21,11 @@ class AudioControl {
     sound.currentTime = 0;
     sound.play();
   }
+  toggle() {
+    if (this.startSong.paused) {
+      this.startSong.play();
+    } else {
+      this.startSong.pause();
+    }
+  }
 }
