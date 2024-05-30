@@ -6,7 +6,6 @@ class Game {
     this.ctx.imageSmoothingEnabled = false;
     this.width = this.canvas.width;
     this.height = this.canvas.height;
-    // this.baseHeight = 1441;
     this.baseHeight = 720;
     this.ratio = this.height / this.baseHeight;
     this.background = new Background(this);
@@ -77,7 +76,6 @@ class Game {
     this.canvas.width = width;
     this.canvas.height = height;
     this.ctx.fillStyle = "#B8D941";
-    // this.ctx.strokeStyle = "black";
     // This is where I make sure the font style is rendered with each resize
     this.ctx.textAlign = "right";
     this.ctx.lineWidth = 1;
