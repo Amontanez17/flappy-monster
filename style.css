@@ -155,7 +155,7 @@
 }
 
 #start-screen {
-  background-image: url("./gui/flappy\ monster\ logo\ upper\ centered.png");
+  background-image: url("gui/flappy\ monster\ logo\ upper\ centered.png");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
