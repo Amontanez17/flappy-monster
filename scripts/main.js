@@ -89,7 +89,7 @@ class Game {
     this.largeFont = Math.ceil(40 * this.ratio);
     this.ctx.font = this.smallFont + "px Bungee";
     this.gravity = 0.15 * this.ratio;
-    this.speed = 4 * this.ratio;
+    this.speed = 5 * this.ratio;
     this.minSpeed = this.speed;
     this.maxSpeed = this.speed * 5;
     this.background.resize();
