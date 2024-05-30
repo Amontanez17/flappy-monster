@@ -121,20 +121,7 @@ class Game {
     });
     // console.log(this.obstacles);
   }
-  // Function that runs to spawn obstacles on the game screen - starts as an empty array
-  // createObstacles() {
-  //   this.obstacles = [];
-  //   const firstX = this.baseHeight * this.ratio;
-  //   const obstacleSpacing = 500 * this.ratio;
-  //   for (let i = 0; i < this.numberOfObstacles; i++) {
-  //     this.obstacles.push(
-  //       Math.random() > 0.2
-  //         ? new Wraith(this, firstX + i * obstacleSpacing)
-  //         : new BrownWraith(this, firstX + i * obstacleSpacing) :
-  //       new PurpleWraith(this, firstX + i * obstacleSpacing)
-  //     );
-  //   }
-  // }
+
   createObstacles() {
     this.obstacles = [];
     const firstX = this.baseHeight * this.ratio;
