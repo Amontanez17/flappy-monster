@@ -1,2 +1,2 @@
-# my-snake-game-repo
-JS snake game
+# flappy-monster
+JS flappy game
