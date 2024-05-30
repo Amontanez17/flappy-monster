@@ -286,9 +286,18 @@ let helpScreen = document.getElementById("help-screen");
 let welcomeScreen = document.getElementById("start-screen");
 let startButton = document.getElementById("start-button-img");
 let helpButton = document.getElementById("help-button");
+let muteButton = document.getElementById("sound-off-btn");
 
+muteButton.addEventListener("click", handleMute);
 document.getElementById("help-button").addEventListener("click", openHelp);
 document.getElementById("exit-help").addEventListener("click", closeHelp);
+
+//Mute Sound
+function handleMute(e) {
+  console.log(muteButton);
+  let audioMute = AudioControl;
+  audioMute.stop(AudioControl);
+}
 
 // Function to open the help screen and hide the start screen
 function openHelp() {
