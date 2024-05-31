@@ -12,7 +12,7 @@ class Game {
     this.player = new Player(this);
     this.sound = new AudioControl();
     this.obstacles = [];
-    this.numberOfObstacles = 17;
+    this.numberOfObstacles = 18;
     this.animationId = null;
     this.restartDialog = document.getElementById("restart-dialog");
     this.restartButton = document.getElementById("restart-button");
@@ -125,7 +125,7 @@ class Game {
   createObstacles() {
     this.obstacles = [];
     const firstX = this.baseHeight * this.ratio;
-    const obstacleSpacing = 450 * this.ratio;
+    const obstacleSpacing = 470 * this.ratio;
     for (let i = 0; i < this.numberOfObstacles; i++) {
       if (Math.random() > 0.3) {
         this.obstacles.push(new Wraith(this, firstX + i * obstacleSpacing));
