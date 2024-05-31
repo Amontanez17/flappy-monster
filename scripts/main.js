@@ -12,7 +12,7 @@ class Game {
     this.player = new Player(this);
     this.sound = new AudioControl();
     this.obstacles = [];
-    this.numberOfObstacles = 15;
+    this.numberOfObstacles = 17;
     this.animationId = null;
     this.restartDialog = document.getElementById("restart-dialog");
     this.restartButton = document.getElementById("restart-button");
@@ -41,6 +41,7 @@ class Game {
     window.addEventListener("resize", (e) => {
       this.resize(e.currentTarget.innerWidth, e.currentTarget.innerHeight);
     });
+
     // Mouse controls
     this.canvas.addEventListener("mousedown", (e) => {
       this.player.flap();
@@ -48,9 +49,9 @@ class Game {
     this.canvas.addEventListener("mouseup", (e) => {
       this.player.wingsUp();
     });
+
     // keyboard controls
     window.addEventListener("keydown", (e) => {
-      // console.log(e.key);
       if (e.key === " " || e.key === "Enter") {
         this.player.flap();
       }
@@ -61,6 +62,7 @@ class Game {
         this.player.wingsUp();
       });
     });
+
     // touch controls for mobile gameplay
     this.canvas.addEventListener("touchstart", (e) => {
       this.player.flap();
@@ -123,17 +125,17 @@ class Game {
   createObstacles() {
     this.obstacles = [];
     const firstX = this.baseHeight * this.ratio;
-    const obstacleSpacing = 500 * this.ratio;
+    const obstacleSpacing = 450 * this.ratio;
     for (let i = 0; i < this.numberOfObstacles; i++) {
       if (Math.random() > 0.3) {
         this.obstacles.push(new Wraith(this, firstX + i * obstacleSpacing));
       } else {
-        if (Math.random() > 0.4) {
+        if (Math.random() > 0.3) {
           this.obstacles.push(
             new BrownWraith(this, firstX + i * obstacleSpacing)
           );
         } else {
-          if (Math.random() > 0.5) {
+          if (Math.random() > 0.3) {
             this.obstacles.push(
               new PurpleWraith(this, firstX + i * obstacleSpacing)
             );
@@ -179,11 +181,6 @@ class Game {
 
     if (!this.gameOver) {
       this.gameOver = true;
-      // setTimeout(function () {
-      //   restartWinDialog.showModal();
-      // }, 3000);
-
-      // restartDialog.showModal();
 
       if (this.obstacles.length <= 0) {
         this.sound.play(this.sound.win);
@@ -245,12 +242,6 @@ class Game {
         this.height * 0.5 - this.smallFont,
         this.width
       );
-      // this.ctx.fillText(
-      //   "Press 'R' to try again!",
-      //   this.width * 0.5,
-      //   this.height * 0.5 - this.smallFont,
-      //   this.width
-      // );
     }
     if (this.player.energy <= this.player.minEnergy) this.ctx.fillStyle = "red";
     else if (this.player.energy >= this.player.maxEnergy)

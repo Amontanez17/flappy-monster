@@ -12,7 +12,7 @@ class Obstacle {
     this.collisionY;
     this.collisionRadius;
     this.speedY =
-      Math.random() < 0.5 ? -1 * this.game.ratio : 1 * this.game.ratio;
+      Math.random() < 0.5 ? -2 * this.game.ratio : 2 * this.game.ratio;
     this.markedForDeletion = false;
     this.image = document.getElementById("obstacle_wraith");
     this.frameX = 0;
