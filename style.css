@@ -248,10 +248,10 @@
 }
 @media (max-width: 768px) {
   #start-buttons {
-    gap: 2rem;
+    gap: 1rem;
   }
   #start-button-img {
-    width: 45vw;
+    width: 35vw;
   }
   #help-button {
     width: 25vw;
