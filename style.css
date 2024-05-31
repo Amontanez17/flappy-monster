@@ -44,9 +44,9 @@
   border: 6px solid #543c27;
   box-shadow: -1px -5px 5px -2px #ef9c6f, -1px -9px 2px #543c27;
 }
-/* help-button:hover {
-  background-color: aquamarine;
-} */
+#help-button:hover {
+  transform: scale(1.1);
+}
 
 #sound-off-btn {
   max-height: 1.5rem;
@@ -97,6 +97,10 @@
   /* margin-bottom: 25px; */
 }
 
+#start-button-img:hover {
+  transform: scale(1.1);
+  /* border-radius: 500px; */
+}
 #restart-button {
   all: unset;
   background: linear-gradient(
