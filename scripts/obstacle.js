@@ -8,6 +8,7 @@ class Obstacle {
     this.scaledHeight = this.spriteHeight * this.game.ratio;
     this.x = x;
     this.y = Math.random() * (this.game.height - this.scaledHeight);
+    console.log(this.y, this.scaledHeight, this.game.height);
     this.collisionX;
     this.collisionY;
     this.collisionRadius;
