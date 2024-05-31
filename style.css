@@ -251,10 +251,13 @@
     gap: 1rem;
   }
   #start-button-img {
-    width: 35vw;
+    width: 25vw;
+    max-width: 30vw;
   }
   #help-button {
-    width: 25vw;
+    font-size: 1.1rem;
+    max-width: 35vw;
+    max-height: 10vh;
   }
 }
 
