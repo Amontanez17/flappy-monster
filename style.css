@@ -23,7 +23,6 @@
   --btn-shadow: #996e44;
   --btn-backgroun: #d7ef6f;
 }
-
 #help-button {
   all: unset;
   background: linear-gradient(
@@ -34,24 +33,23 @@
     rgba(254, 255, 251, 1) 100%
   );
   text-align: center;
-  /* position: absolute; */
-  width: 9vw;
-  /* align-content: center;
-  justify-items: center;
-  align-items: center; */
-  max-width: 8vw;
-  max-height: 4vh;
-  /* height: auto; */
-  font-size: 2.1rem;
+  width: 14vw;
+  min-height: 5.3vh;
+  /* max-width: 8vw;
+    max-height: 4vh; */
+  font-size: 1.8rem;
   color: #543c27;
-  padding: 18px 50px;
+  padding: 0.5rem 0.8rem;
   border-radius: 100vw;
   border: 6px solid #543c27;
   box-shadow: -1px -5px 5px -2px #ef9c6f, -1px -9px 2px #543c27;
 }
+/* help-button:hover {
+  background-color: aquamarine;
+} */
 
 #sound-off-btn {
-  width: 0.2vw;
+  max-height: 1.5rem;
   height: fit-content;
   position: absolute;
   right: 3vw;
@@ -63,7 +61,7 @@
     circle,
     /* rgba(148, 187, 233, 1) 0%, */ rgba(249, 239, 248, 1) 32%
   );
-  padding: 2rem;
+  padding: 1.3rem;
   border-radius: 360vw;
   border: 4px solid #543c27;
   max-width: 0.3rem;
@@ -72,7 +70,7 @@
 }
 #sound-icon {
   /* padding: 1rem; */
-  max-width: 2rem;
+  max-width: 1.5rem;
   max-height: auto;
 }
 
@@ -249,11 +247,14 @@
   box-shadow: -1px -5px 5px -2px #eeaeca, -1px -9px 2px #543c27;
 }
 @media (max-width: 768px) {
+  #start-buttons {
+    gap: 2rem;
+  }
   #start-button-img {
-    width: 50%;
+    width: 45vw;
   }
   #help-button {
-    width: 50%;
+    width: 25vw;
   }
 }
 
