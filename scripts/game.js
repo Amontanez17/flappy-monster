@@ -11,7 +11,7 @@ class Game {
     this.player = new Player(this);
     this.sound = new AudioControl();
     this.obstacles = [];
-    this.numberOfObstacles = 18;
+    this.numberOfObstacles = 20;
     this.animationId = null;
     this.restartDialog = document.getElementById("restart-dialog");
     this.restartButton = document.getElementById("restart-button");
