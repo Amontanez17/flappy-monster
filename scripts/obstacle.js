@@ -36,7 +36,9 @@ class Obstacle {
         (obstacle) => !obstacle.markedForDeletion
       );
       //   console.log(this.game.obstacles.length);
-      this.game.score++;
+      if (!this.game.gameOver) {
+        this.game.score++;
+      }
       if (this.game.obstacles.length <= 0) this.game.triggerGameOver();
     }
     if (this.game.checkCollision(this, this.game.player)) {

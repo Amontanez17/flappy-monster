@@ -1,5 +1,5 @@
 let audioControl;
-
+let now = Date.now();
 let helpScreen = document.getElementById("help-screen");
 let welcomeScreen = document.getElementById("start-screen");
 let startButton = document.getElementById("start-button-img");
@@ -45,7 +45,10 @@ startButton.addEventListener(
 
     const game = new Game(canvas, ctx);
 
-    let lastTime = 0;
+    let then = Date.now();
+    const delta = then - now;
+    let lastTime = 0 + delta;
+    console.log(delta);
     function animate(timeStamp) {
       const deltaTime = timeStamp - lastTime;
       lastTime = timeStamp;
@@ -59,6 +62,17 @@ startButton.addEventListener(
 );
 
 // inside of the animate function increment a count, set a max count 18, the player image source should be modified based on the counter. add a modulo % 18 so it restarts at zero
-if (window.matchMedia("(orientation: portrait)").matches) {
-  alert("Switch to Landscape mode!");
+// if (window.matchMedia("(orientation: portrait)").matches) {
+//   alert("Switch to Landscape mode!");
+// }
+
+if (screen.orientation.type.startsWith("portrait")) {
+  screen.orientation
+    .lock("landscape")
+    .then(() => {
+      console.log("locked to landscape");
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 }
