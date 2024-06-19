@@ -1,6 +1,6 @@
 # Flappy Monster: A revisited classic
 
-## by Angela Montanez
+## by Angela Montanez                ## [Link to my presentation](https://docs.google.com/presentation/d/1_J5tcfN7KfCJM4gbol2riHvGo8C7kn6yYtLfTs1Xjfo/edit?usp=sharing)
 
 ### Why I chose this game:
 
